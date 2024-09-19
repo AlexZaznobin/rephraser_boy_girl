@@ -1,0 +1,16 @@
+google-cloud-billing
+fire
+datasets
+sacrebleu
+rouge-score
+sentence-transformers
+nltk
+spacy
+transformers
+python-dotenv
+boto3
+bitsandbytes
+trl
+peft
+flash-attn
+torch
