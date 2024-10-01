@@ -1,0 +1,8 @@
+# Step 1: Create the PostgreSQL directory for SSL certificates
+!mkdir -p ~/.postgresql
+
+# Step 2: Download the Yandex Cloud CA certificate using curl
+!curl -o ~/.postgresql/root.crt "https://storage.yandexcloud.net/cloud-certs/CA.pem"
+
+# Step 3: Set secure permissions on the downloaded certificate file
+!chmod 0600 ~/.postgresql/root.crt
