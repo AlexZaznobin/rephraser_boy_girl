@@ -150,3 +150,6 @@ yarl==1.11.1
 psycopg2-binary
 scikit-learn
 boto3
+google-cloud-billing
+vertexai
+sacrebleu

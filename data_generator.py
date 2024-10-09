@@ -142,6 +142,14 @@ class Gemini:
         return result_df
 
 
+def create_llama2_prompt(row):
+    prompt = f"""[INST]  Измени род в предложении с мужского на женский на русском языке :  {row['original']}[/INST] {row['paraphrase']} """
+    return prompt
+
+def create_llama2_request(text):
+    prompt = f"""[INST] Измени род в предложении с мужского на женский на русском языке :  {text} [/INST]"""
+    return prompt
+
 if __name__ == '__main__':
     gemini_1_5 = Gemini(model_name="gemini-1.5-pro")
     gemini_flash = Gemini(model_name="gemini-1.5-flash")

@@ -52,9 +52,59 @@ def get_connection(dbname="db3"):
     """)
 
 
-def table_boy_girl_creation():
-    table_name = "SYNTH_BOY_GIRL"
-    cur = postgres_connection.cursor()
+def upload_dataframe_to_postgres (df, pgc, table_name="SYNTH_BOY_GIRL") :
+    """
+    Uploads a DataFrame to a PostgreSQL table. If the table doesn't exist, it will be created.
+    If a column doesn't exist, it will be added.
+
+    :param df: pd.DataFrame, the DataFrame to upload
+    :param postgres_connection: psycopg2 connection, the PostgreSQL connection object
+    :param table_name: str, the name of the table to upload data to
+    """
+    try :
+        # Rollback any existing transactions
+        pgc.rollback()
+        cur = pgc.cursor()
+
+        # Check if table exists
+        cur.execute(f"SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name='{table_name}');")
+        if not cur.fetchone()[0] :
+            print(f"Table '{table_name}' does not exist, creating a new one.")
+            table_boy_girl_creation(pgc,table_name)
+
+        # Fetch existing columns in the table
+        cur.execute(f"SELECT column_name FROM information_schema.columns WHERE table_name = '{table_name}';")
+        existing_columns = {row[0] for row in cur.fetchall()}
+
+        # Add any missing columns to the table
+        missing_columns = set(df.columns) - existing_columns
+        for column in missing_columns :
+            col_type = 'TEXT' if df[column].dtype == 'object' else 'DOUBLE PRECISION'
+            alter_query = f"ALTER TABLE {table_name} ADD COLUMN {column} {col_type};"
+            cur.execute(alter_query)
+            print(f"Added missing column '{column}' to table '{table_name}'.")
+
+        pgc.commit()
+
+        # Insert data into the table
+        columns = [column for column in df.columns if column != 'id']
+        df=df[columns]
+        for row in df.itertuples(index=False) :
+            insert_query = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({', '.join(['%s'] * len(columns))});"
+            cur.execute(insert_query, row)
+
+        pgc.commit()
+
+    except Exception as e :
+        print(f"An error occurred: {e}")
+        pgc.rollback()
+
+    finally :
+        cur.close()
+
+
+def table_boy_girl_creation(pgc,table_name):
+    cur = pgc.cursor()
     create_new_table_querry = f"""
     CREATE TABLE IF NOT EXISTS {table_name} (
       id SERIAL PRIMARY KEY,
@@ -67,7 +117,7 @@ def table_boy_girl_creation():
       date TIMESTAMP
     );"""
     cur.execute(create_new_table_querry)
-    postgres_connection.commit()
+    pgc.commit()
 
 def download_table_as_dataframe (postgres_connection, table_name="SYNTH_BOY_GIRL") :
     """

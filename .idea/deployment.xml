@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="ubuntu@52.35.157.42:22 key" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="moedelo@10.100.100.1:22 key" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
     <option name="confirmBeforeUploading" value="false" />
     <serverData>
-      <paths name="ec2-user@52.35.157.42:22 key">
+      <paths name="moedelo@10.100.100.1:22 key">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/ec2-user/rephraser_boy_girl" local="$PROJECT_DIR$" />
+            <mapping deploy="/home/moedelo/chatbot" local="$PROJECT_DIR$" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/_.env" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.full_env" />
+          </excludedPaths>
         </serverdata>
       </paths>
-      <paths name="ubuntu@52.35.157.42:22 key">
+      <paths name="ubuntu@52.35.157.42:22 key (2)">
         <serverdata>
           <mappings>
             <mapping deploy="/home/ubuntu/rephraser_boy_girl" local="$PROJECT_DIR$" />
