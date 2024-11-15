@@ -63,3 +63,6 @@ def download_model_from_s3 (s3_bucket_name, s3_model_dir, local_model_dir) :
         # Download the file
         s3_client.download_file(s3_bucket_name, s3_file_path, local_file_path)
         print(f"Downloaded {s3_file_path} to {local_file_path}")
+
+if __name__ == '__main__' :
+    upload_model_to_s3(local_directory='adapter_patch', bucket_name='model-holder', s3_directory='test_dir')
