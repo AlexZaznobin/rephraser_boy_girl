@@ -155,7 +155,7 @@ if __name__ == '__main__':
     gemini_flash = Gemini(model_name="gemini-1.5-flash")
     # Define the path to your txt file
     file_path = 'data_generation_prompt.txt'
-
+    postgres_connection=get_connection(dbname="db3")
     # Open and read the content of the file
     with open(file_path, 'r', encoding='utf-8') as file :
         data_set_prompt = file.read()

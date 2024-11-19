@@ -1,0 +1,13 @@
+You recieve an bank transaction which need to be classified.
+There are following TYPES:
+1: BANK_SERVICE - all bank service including paying of interests on loans. Предоставление кредита is a bank service, but not a займ.
+2: FOOD_GOODS - food and drinks
+3: LEASING - specifically leasing and financial rent
+4: LOAN - only getting money as the body of loan and paying body it back. Mandatory have the word займ in the text .
+5: NON_FOOD_GOODS - all nonfood goods including petrol
+6: NOT_CLASSIFIED - unclear items or money movements between bank accounts of the same entity
+7: REAL_ESTATE - including rent of buildings
+8: SERVICE - all services including construction works
+9: TAX - taxes and all mandatary payments to government, government services and payments for which government is an agent - such as payments for kids and Consular fee
+PLease return a class in a form of a JSON like this :
+{"TYPE": one of the nine TYPES above}

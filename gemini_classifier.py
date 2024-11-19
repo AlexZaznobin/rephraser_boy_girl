@@ -10,6 +10,8 @@ import json
 import os
 import re
 import pandas as pd
+import time
+from sklearn.model_selection import train_test_split
 
 def get_prices():
     billing_client = billing_v1.CloudCatalogClient()
@@ -94,27 +96,51 @@ class Gemini:
                 'response_mime_type' : 'application/json'
             }
         self.accountant = GeminiAccountant()
+        self.index=0
     def _process_gemini_json_output (self , gemini_excerpts_str) :
         gemini_excerpts_str_1 = gemini_excerpts_str.replace('\n', '')
         gemini_excerpts_str_1 = gemini_excerpts_str_1.replace('json', '')
         gemini_excerpts_str_1 = gemini_excerpts_str_1.replace('```', '')
         return  gemini_excerpts_str_1
 
+    def infrence (self, request, postgres_connection=None) :
+        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        time.sleep(0.21)
+        response = self.model.generate_content(request, generation_config=self.generation_config)
+        text = response.candidates[0].content.parts[0].text
+        text_cleaned=self._process_gemini_json_output(text)
+
+        cost = self.accountant.calculate_amount_gemini(input_tokens=response.usage_metadata.prompt_token_count,
+                                                       output_tokens=response.usage_metadata.candidates_token_count,
+                                                       g_model=self.model_name)
+        try:
+            result_json = json.loads(text_cleaned)
+            result_json['cost']=cost
+
+            print(self.index," ",request[931:]," ",result_json)
+            self.index=self.index+1
+            return result_json
+        except:
+            return {"TYPE":"NONE","cost":cost}
 if __name__ == '__main__':
     gemini_1_5 = Gemini(model_name="gemini-1.5-pro")
     gemini_flash = Gemini(model_name="gemini-1.5-flash")
     # Define the path to your txt file
-    file_path = 'data_generation_prompt.txt'
+    file_path = 'data_classification.txt'
     # Open and read the content of the file
     with open(file_path, 'r', encoding='utf-8') as file :
         data_set_prompt = file.read()
-    # for i in range(10) :
-#     result_df = gemini_1_5.infrence(request=data_set_prompt,postgres_connection=postgres_connection)
-#     postgres_connection.rollback()
-#     gemini_1_5._save_to_postgress(postgres_connection ,result_df)
+    column_names=["num","date","text"]#,"label"]
+    data=df = pd.read_csv('unclassified.csv',names=column_names, header=None)  # Use `header=None` if the file has no header row
+    test_size = 1000
 
+    # Split the DataFrame into train and test
+    train_df, test_df = train_test_split(df, test_size=test_size, random_state=42)
 
-    # for i in range(100):
-    #     result_df = gemini_flash.infrence(request=data_set_prompt,postgres_connection=postgres_connection)
-    #     postgres_connection.rollback()
-    #     gemini_flash._save_to_postgress(postgres_connection ,result_df)from google.cloud import billing_v1
+    # Apply the inference and save TYPE and cost into separate columns
+    test_df[['predicted_type', 'cost']] = test_df['text'].apply(
+        lambda x : pd.Series(gemini_flash.infrence(f"{data_set_prompt}{x}"))
+    )
+
+    test_df.to_csv('classified_1000.csv')
+    train_df.to_csv('unclassified.csv')

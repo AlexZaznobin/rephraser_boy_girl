@@ -104,7 +104,6 @@ def formatting_func_chat (examples, tokenizer, max_length) :
 if __name__ == '__main__':
     EPOCHS=2
     LEARNING_RATE=1e-5
-    os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
     pgc = postgress_connection.get_connection(dbname="db3")
     load_dotenv(find_dotenv())
     data_df = postgress_connection.download_table_as_dataframe(pgc)

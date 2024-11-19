@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="ubuntu@52.35.157.42:22 key (2)" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="ubuntu@81.94.159.71:22 key (2)" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
     <option name="confirmBeforeUploading" value="false" />
     <serverData>
       <paths name="moedelo@10.100.100.1:22 key">
@@ -12,6 +12,13 @@
             <excludedPath local="true" path="$PROJECT_DIR$/_.env" />
             <excludedPath local="true" path="$PROJECT_DIR$/.full_env" />
           </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu@130.193.57.77:22 key">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ubuntu/rephraser_boy_girl" local="$PROJECT_DIR$" />
+          </mappings>
         </serverdata>
       </paths>
       <paths name="ubuntu@52.35.157.42:22 key">
@@ -43,6 +50,20 @@
         </serverdata>
       </paths>
       <paths name="ubuntu@81.94.159.250:22 key (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ubuntu/rephraser_boy_girl" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu@81.94.159.71:22 key">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_506" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu@81.94.159.71:22 key (2)">
         <serverdata>
           <mappings>
             <mapping deploy="/home/ubuntu/rephraser_boy_girl" local="$PROJECT_DIR$" />

@@ -3,3 +3,5 @@
 gemini_synt_data_set.json
 /avito
 hackathon.txt
+payments_main.tsv
+payments_training.tsv
