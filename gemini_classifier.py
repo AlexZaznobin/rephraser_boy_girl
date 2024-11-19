@@ -143,5 +143,4 @@ if __name__ == '__main__':
         lambda x : pd.Series(gemini_flash.infrence(f"{data_set_prompt}{x}"))
     )
 
-    test_df.to_csv('classified_1000.csv')
-    train_df.to_csv('unclassified.csv')
+    test_df.to_csv('hilab.csv')

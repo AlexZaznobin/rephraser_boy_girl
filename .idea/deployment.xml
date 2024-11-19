@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="ubuntu@81.94.159.71:22 key (2)" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="ubuntu@51.250.34.52:22 key" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
     <option name="confirmBeforeUploading" value="false" />
     <serverData>
       <paths name="moedelo@10.100.100.1:22 key">
@@ -15,6 +15,13 @@
         </serverdata>
       </paths>
       <paths name="ubuntu@130.193.57.77:22 key">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ubuntu/rephraser_boy_girl" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu@51.250.34.52:22 key">
         <serverdata>
           <mappings>
             <mapping deploy="/home/ubuntu/rephraser_boy_girl" local="$PROJECT_DIR$" />
