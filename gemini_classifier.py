@@ -126,19 +126,20 @@ if __name__ == '__main__':
     gemini_1_5 = Gemini(model_name="gemini-1.5-pro")
     gemini_flash = Gemini(model_name="gemini-1.5-flash")
     # Define the path to your txt file
-    file_path = 'data_classification.txt'
+    # file_path = 'data_classification.txt'
+    file_path = 'binary_classification_prompt.txt'
     # Open and read the content of the file
     with open(file_path, 'r', encoding='utf-8') as file :
         data_set_prompt = file.read()
-    column_names=["num","date","text"]#,"label"]
-    data=df = pd.read_csv('unclassified.csv',names=column_names, header=None)  # Use `header=None` if the file has no header row
-    test_size = 1000
-
-    # Split the DataFrame into train and test
-    train_df, test_df = train_test_split(df, test_size=test_size, random_state=42)
-
+    # column_names=["num","date","text"]#,"label"]
+    # data=df = pd.read_csv('unclassified.csv',names=column_names, header=None)  # Use `header=None` if the file has no header row
+    # test_size = 1000
+    #
+    # # Split the DataFrame into train and test
+    # train_df, test_df = train_test_split(df, test_size=test_size, random_state=42)
+    test_df= pd.read_csv('hilabelled.csv')
     # Apply the inference and save TYPE and cost into separate columns
-    test_df[['predicted_type', 'cost']] = test_df['text'].apply(
+    test_df[['predicted_type', 'cost']] = test_df['dialog'].apply(
         lambda x : pd.Series(gemini_flash.infrence(f"{data_set_prompt}{x}"))
     )
 
