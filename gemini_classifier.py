@@ -105,7 +105,7 @@ class Gemini:
 
     def infrence (self, request, postgres_connection=None) :
         date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        time.sleep(0.21)
+        time.sleep(0.25)
         response = self.model.generate_content(request, generation_config=self.generation_config)
         text = response.candidates[0].content.parts[0].text
         text_cleaned=self._process_gemini_json_output(text)
@@ -137,10 +137,10 @@ if __name__ == '__main__':
     #
     # # Split the DataFrame into train and test
     # train_df, test_df = train_test_split(df, test_size=test_size, random_state=42)
-    test_df= pd.read_csv('hilabelled.csv')
+    test_df= pd.read_csv('50.csv')
     # Apply the inference and save TYPE and cost into separate columns
     test_df[['predicted_type', 'cost']] = test_df['dialog'].apply(
-        lambda x : pd.Series(gemini_flash.infrence(f"{data_set_prompt}{x}"))
+        lambda x : pd.Series(gemini_1_5.infrence(f"{data_set_prompt}{x}"))
     )
 
-    test_df.to_csv('hilab.csv')
+    test_df.to_csv('50_gl.csv')

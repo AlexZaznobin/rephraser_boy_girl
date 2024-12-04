@@ -153,3 +153,4 @@ boto3
 google-cloud-billing
 vertexai
 sacrebleu
+vllm

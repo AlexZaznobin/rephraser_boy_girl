@@ -38,15 +38,16 @@ assistant: к сожалению, я не могу вам ответить на 
     # Load model with automatic device mapping to distribute across CPU and GPU
     bnb_config = BitsAndBytesConfig(
         load_in_8bit=True,  # Enable 8-bit quantization
+        llm_int8_enable_fp32_cpu_offload=True
     )
     base_model = AutoModelForCausalLM.from_pretrained(
         base_model_name,
-        # quantization_config=bnb_config,#rtx 4090
+        quantization_config=bnb_config,
         device_map="auto"
     )
     # Prepare the model with accelerator
-    base_model = accelerator.prepare(base_model)
-    print(f"Base model loaded at {datetime.now().date()}")
+    # base_model = accelerator.prepare(base_model)
+    print(f"Base model loaded at {datetime.now()}")
     tokenizer = AutoTokenizer.from_pretrained(base_model_name)
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
@@ -55,7 +56,7 @@ assistant: к сожалению, я не могу вам ответить на 
     device = "cuda" if  torch.cuda.is_available() else "cpu"
     inputs = tokenizer(input_text, return_tensors="pt").to(device)
     temperature = 0.01
-
+    start=datetime.now()
     outputs = base_model.generate(
         **inputs,
         max_length=1000,  #
@@ -63,6 +64,7 @@ assistant: к сожалению, я не могу вам ответить на 
     )
 
     ft_generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    print(f"INference  {datetime.now()}")
     print(f"\nbase_model_name {base_model_name}"
           f"\ninput_text temperature {temperature}:"
           f"\n {input_text}\n "
